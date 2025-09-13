@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "block-palette": "/components/block-palette/block-palette",
+    "code-viewer": "/components/code-viewer/code-viewer",
+    "stage-viewer": "/components/stage-viewer/stage-viewer"
+  },
+  "navigationBarTitleText": "积木编程编辑器",
+  "navigationBarBackgroundColor": "#667eea",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f5f6fa",
+  "enablePullDownRefresh": false,
+  "disableScroll": true
+}

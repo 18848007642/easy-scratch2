@@ -1,0 +1,222 @@
+<!-- 丝路智星 - 积木编程编辑器页面 -->
+<view class="editor-container">
+  <!-- 顶部工具栏 -->
+  <view class="toolbar">
+    <view class="toolbar-left">
+      <image class="logo" src="/assets/logo.png" mode="aspectFit"></image>
+      <input class="project-name" value="{{projectName}}" bindinput="onProjectNameChange" placeholder="项目名称"/>
+    </view>
+    
+    <view class="toolbar-center">
+      <button class="tool-btn" bindtap="undoAction">
+        <text class="iconfont icon-undo"></text>
+        撤销
+      </button>
+      <button class="tool-btn" bindtap="redoAction">
+        <text class="iconfont icon-redo"></text>
+        重做
+      </button>
+    </view>
+    
+    <view class="toolbar-right">
+      <button class="save-btn" bindtap="saveProject">
+        <text class="iconfont icon-save"></text>
+        保存
+      </button>
+      <button class="share-btn" bindtap="shareProject">
+        <text class="iconfont icon-share"></text>
+        分享
+      </button>
+      <button class="run-btn {{isRunning ? 'running' : ''}}" bindtap="runCode">
+        <text class="iconfont {{isRunning ? 'icon-stop' : 'icon-play'}}"></text>
+        {{isRunning ? '停止' : '运行'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 主编辑区域 -->
+  <view class="editor-main">
+    <!-- 左侧积木分类 -->
+    <scroll-view class="blocks-panel" scroll-y="true">
+      <view class="panel-header">积木</view>
+      
+      <view class="categories">
+        <view wx:for="{{categories}}" wx:key="name" 
+              class="category-item" 
+              style="background-color: {{item.color}}"
+              data-category="{{item.name}}"
+              bindtap="selectCategory">
+          <text class="category-icon iconfont icon-{{item.name}}"></text>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+      
+      <!-- 积木块列表 -->
+      <view class="blocks-list">
+        <view class="block-item" wx:for="{{currentBlocks}}" wx:key="id"
+              draggable="true"
+              data-block="{{item}}"
+              bindtouchstart="onBlockDragStart">
+          <view class="block" style="background-color: {{currentCategoryColor}}">
+            {{item.text}}
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 中间工作区 -->
+    <view class="workspace-area">
+      <view class="workspace-header">
+        <text>工作区</text>
+        <button class="clear-btn" bindtap="clearWorkspace">清空</button>
+      </view>
+      
+      <!-- Blockly工作区或自定义积木编辑区 -->
+      <scroll-view class="workspace" scroll-x="true" scroll-y="true">
+        <view class="workspace-content" id="blockly-div">
+          <!-- 积木工作区 -->
+          <view class="dropped-blocks">
+            <view wx:for="{{droppedBlocks}}" wx:key="id" 
+                  class="dropped-block"
+                  style="left: {{item.x}}px; top: {{item.y}}px; background-color: {{item.color}}">
+              {{item.text}}
+              <text class="remove-block" data-id="{{item.id}}" bindtap="removeBlock">×</text>
+            </view>
+          </view>
+          
+          <!-- 连接线 -->
+          <svg class="connections" width="100%" height="100%">
+            <line wx:for="{{connections}}" wx:key="id"
+                  x1="{{item.x1}}" y1="{{item.y1}}"
+                  x2="{{item.x2}}" y2="{{item.y2}}"
+                  stroke="#666" stroke-width="2"/>
+          </svg>
+        </view>
+      </scroll-view>
+      
+      <!-- 代码预览 -->
+      <view class="code-preview" wx:if="{{showCodePreview}}">
+        <view class="preview-header">
+          <text>生成的代码</text>
+          <text class="close-preview" bindtap="toggleCodePreview">×</text>
+        </view>
+        <scroll-view class="code-content" scroll-y="true">
+          <text class="code-text">{{code}}</text>
+        </scroll-view>
+      </view>
+    </view>
+
+    <!-- 右侧舞台和精灵 -->
+    <view class="stage-panel">
+      <!-- 舞台区域 -->
+      <view class="stage-container">
+        <view class="stage-header">
+          <text>舞台</text>
+          <button class="fullscreen-btn" bindtap="toggleFullscreen">
+            <text class="iconfont icon-fullscreen"></text>
+          </button>
+        </view>
+        
+        <view class="stage" style="width: {{stageWidth}}rpx; height: {{stageHeight}}rpx;">
+          <!-- 背景 -->
+          <image class="stage-bg" src="/assets/stage-bg.png" mode="aspectFill"></image>
+          
+          <!-- 精灵 -->
+          <view wx:for="{{sprites}}" wx:key="id" 
+                class="sprite {{item.id === selectedSprite ? 'selected' : ''}}"
+                style="left: {{item.x + stageWidth/2}}rpx; top: {{stageHeight/2 - item.y}}rpx; transform: rotate({{item.direction - 90}}deg);"
+                data-id="{{item.id}}"
+                bindtap="selectSprite">
+            <image src="/assets/sprites/{{item.id}}.png" mode="aspectFit"></image>
+            <view class="sprite-bubble" wx:if="{{item.saying}}">{{item.saying}}</view>
+          </view>
+        </view>
+        
+        <!-- 舞台控制 -->
+        <view class="stage-controls">
+          <button class="control-btn" bindtap="resetStage">
+            <text class="iconfont icon-reset"></text>
+          </button>
+          <button class="control-btn" bindtap="toggleGrid">
+            <text class="iconfont icon-grid"></text>
+          </button>
+        </view>
+      </view>
+      
+      <!-- 精灵列表 -->
+      <view class="sprites-list">
+        <view class="list-header">
+          <text>精灵</text>
+          <button class="add-sprite-btn" bindtap="addSprite">+</button>
+        </view>
+        
+        <scroll-view class="sprites-scroll" scroll-y="true">
+          <view wx:for="{{sprites}}" wx:key="id" 
+                class="sprite-item {{item.id === selectedSprite ? 'active' : ''}}"
+                data-id="{{item.id}}"
+                bindtap="selectSprite">
+            <image class="sprite-thumb" src="/assets/sprites/{{item.id}}-thumb.png"></image>
+            <text class="sprite-name">{{item.name}}</text>
+            <view class="sprite-info">
+              x: {{item.x}}, y: {{item.y}}
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+      
+      <!-- 属性面板 -->
+      <view class="properties-panel" wx:if="{{selectedSprite}}">
+        <view class="panel-header">属性</view>
+        <view class="property-item">
+          <text>X坐标:</text>
+          <input type="number" value="{{currentSprite.x}}" bindinput="onSpriteXChange"/>
+        </view>
+        <view class="property-item">
+          <text>Y坐标:</text>
+          <input type="number" value="{{currentSprite.y}}" bindinput="onSpriteYChange"/>
+        </view>
+        <view class="property-item">
+          <text>方向:</text>
+          <input type="number" value="{{currentSprite.direction}}" bindinput="onSpriteDirectionChange"/>
+        </view>
+        <view class="property-item">
+          <text>大小:</text>
+          <slider value="{{currentSprite.size}}" min="50" max="200" bindchange="onSpriteSizeChange"/>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部输出控制台 -->
+  <view class="console-panel {{showConsole ? 'expanded' : 'collapsed'}}">
+    <view class="console-header" bindtap="toggleConsole">
+      <text class="iconfont icon-console"></text>
+      <text>控制台</text>
+      <text class="console-badge" wx:if="{{output.length > 0}}">{{output.length}}</text>
+      <button class="clear-console" catchtap="clearConsole">清空</button>
+    </view>
+    
+    <scroll-view class="console-content" scroll-y="true" scroll-into-view="{{scrollToView}}">
+      <view class="console-line" wx:for="{{output}}" wx:key="index" id="line-{{index}}">
+        <text class="console-time">{{item.time}}</text>
+        <text class="console-message">{{item.message}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- AI助手浮窗 -->
+  <view class="ai-assistant {{showAI ? 'show' : 'hide'}}" bindtap="toggleAI">
+    <image class="ai-avatar" src="/assets/ai-assistant.png"></image>
+    <view class="ai-bubble" wx:if="{{aiMessage}}">
+      {{aiMessage}}
+    </view>
+  </view>
+
+  <!-- 快捷键提示 -->
+  <view class="shortcuts-hint" wx:if="{{showShortcuts}}">
+    <view class="hint-item">Ctrl+S: 保存</view>
+    <view class="hint-item">Ctrl+Z: 撤销</view>
+    <view class="hint-item">Ctrl+Y: 重做</view>
+    <view class="hint-item">F5: 运行</view>
+  </view>
+</view>
