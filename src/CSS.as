@@ -35,10 +35,15 @@ public class CSS {
 	public static const topBarColor_ScratchX:int = 0x30485f;
 	public static const backgroundColor_ScratchX:int = 0x3f5975;
 
+	// 丝路智星主题色 - 金色和蓝色系
+	public static const silkRoadGold:int = 0xD4AF37;  // 丝路金
+	public static const silkRoadBlue:int = 0x1E5A8E;  // 智慧蓝
+	public static const silkRoadDarkBlue:int = 0x0D3B66; // 深蓝
+
 	// Colors
 	public static const white:int = 0xFFFFFF;
 	public static const backgroundColor_default:int = white;
-	public static const topBarColor_default:int = 0x9C9EA2;
+	public static const topBarColor_default:int = silkRoadBlue;  // 使用丝路智星蓝
 	public static const tabColor:int = 0xE6E8E8;
 	public static const panelColor:int = 0xF2F2F2;
 	public static const itemSelectedColor:int = 0xD0D0D0;

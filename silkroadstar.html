@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丝路智星 - 青少年编程教育平台</title>
+    <meta name="description" content="丝路智星是基于Scratch的青少年编程教育平台，让孩子在游戏中学习编程，培养逻辑思维和创造力。">
+    <meta name="keywords" content="丝路智星,SilkRoadStar,少儿编程,Scratch,编程教育,图形化编程">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 顶部导航栏 */
+        .header {
+            background: linear-gradient(90deg, #1E5A8E 0%, #0D3B66 100%);
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #1E5A8E;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .slogan {
+            font-size: 12px;
+            color: #D4AF37;
+            margin-top: 2px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+        
+        .nav-item:hover {
+            color: #D4AF37;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: #1E5A8E;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* 主内容区 */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .editor-wrapper {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .editor-header {
+            background: linear-gradient(90deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .project-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .project-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .editor-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-save {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-share {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .btn-help {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        #silkroadstar-container {
+            flex: 1;
+            width: 100%;
+            position: relative;
+            background: #f0f0f0;
+        }
+        
+        /* 底部信息栏 */
+        .footer {
+            background: #1E5A8E;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #D4AF37;
+            text-decoration: none;
+        }
+        
+        /* 加载动画 */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #1E5A8E;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: #666;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">智</div>
+                <div>
+                    <div class="logo-text">丝路智星</div>
+                    <div class="slogan">编程启蒙，智创未来</div>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">首页</a>
+                <a href="#" class="nav-item">课程</a>
+                <a href="#" class="nav-item">作品</a>
+                <a href="#" class="nav-item">社区</a>
+                <a href="#" class="btn-start">开始创作</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 主编辑器区域 -->
+    <div class="main-container">
+        <div class="editor-wrapper">
+            <div class="editor-header">
+                <div class="project-info">
+                    <span class="project-name">我的项目</span>
+                    <span style="color: #666;">未保存</span>
+                </div>
+                <div class="editor-controls">
+                    <button class="control-btn btn-save">保存</button>
+                    <button class="control-btn btn-share">分享</button>
+                    <button class="control-btn btn-help">帮助</button>
+                </div>
+            </div>
+            
+            <div id="silkroadstar-container">
+                <!-- Flash/SWF 内容将加载在这里 -->
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">丝路智星编辑器加载中...</div>
+                </div>
+                
+                <!-- 实际的 SWF 嵌入代码 -->
+                <embed id="silkroadstar-swf" 
+                       src="bin-debug/scratch2.swf" 
+                       width="100%" 
+                       height="100%" 
+                       type="application/x-shockwave-flash"
+                       style="display: none;">
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部信息 -->
+    <footer class="footer">
+        <p>© 2024 丝路智星科技 版权所有 | <a href="#">关于我们</a> | <a href="#">使用条款</a> | <a href="#">隐私政策</a></p>
+    </footer>
+    
+    <script>
+        // 初始化丝路智星编辑器
+        window.onload = function() {
+            // 模拟加载过程
+            setTimeout(function() {
+                var loading = document.querySelector('.loading');
+                var swf = document.getElementById('silkroadstar-swf');
+                if (loading) loading.style.display = 'none';
+                if (swf) swf.style.display = 'block';
+            }, 2000);
+            
+            // 项目管理功能
+            window.SilkRoadStar = {
+                saveProject: function() {
+                    alert('项目保存功能开发中...');
+                },
+                shareProject: function() {
+                    alert('项目分享功能开发中...');
+                },
+                showHelp: function() {
+                    alert('丝路智星帮助中心\n\n快捷键：\n- Ctrl+S: 保存\n- F5: 运行\n- Space: 暂停/继续');
+                }
+            };
+            
+            // 绑定按钮事件
+            document.querySelector('.btn-save').onclick = SilkRoadStar.saveProject;
+            document.querySelector('.btn-share').onclick = SilkRoadStar.shareProject;
+            document.querySelector('.btn-help').onclick = SilkRoadStar.showHelp;
+        };
+    </script>
+</body>
+</html>

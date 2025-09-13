@@ -73,8 +73,10 @@ import util.*;
 import watchers.ListWatcher;
 
 public class Scratch extends Sprite {
-	// Version
-	public static const versionString:String = 'v461.2';
+	// Version - 丝路智星
+	public static const versionString:String = 'SilkRoadStar v1.0.0';
+	public static const appName:String = '丝路智星';
+	public static const appNameEn:String = 'SilkRoadStar';
 	public static var app:Scratch; // static reference to the app, used for debugging
 
 	// Display modes
