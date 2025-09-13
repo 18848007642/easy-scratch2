@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丝路智星 - 青少年编程教育平台</title>
+    <meta name="description" content="丝路智星(SilkRoadStar)是基于Scratch的青少年编程教育平台，让孩子在游戏中学习编程，培养逻辑思维和创造力。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E5A8E;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3B82F6 0%, #1E5A8E 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3B82F6;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6 0%, #1E5A8E 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* 主要内容 */
+        .hero {
+            margin-top: 80px;
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .demo-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .demo-card i {
+            font-size: 48px;
+            color: #3B82F6;
+            margin-bottom: 20px;
+        }
+        
+        .demo-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .demo-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .demo-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #3B82F6 0%, #1E5A8E 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* 特性展示 */
+        .features {
+            padding: 60px 20px;
+            background: white;
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+        }
+        
+        .feature-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .feature-item p {
+            color: #666;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: #1E5A8E;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #D4AF37;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .demo-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <span>丝路智星</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#demo">在线体验</a>
+                <a href="#features">特色功能</a>
+                <a href="#courses">课程</a>
+                <a href="https://github.com/18848007642/easy-scratch2" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 主要内容 -->
+    <section class="hero" id="home">
+        <h1>🌟 丝路智星</h1>
+        <p>追逐教育梦想与探索 - 让编程学习变得简单有趣</p>
+        
+        <div class="demo-container">
+            <div class="demo-header">
+                <h2>选择体验方式</h2>
+                <p>多种方式体验丝路智星编程平台</p>
+            </div>
+            
+            <div class="demo-options">
+                <div class="demo-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>在线体验版</h3>
+                    <p>基于 Ruffle 的浏览器内运行版本，无需安装任何插件</p>
+                    <a href="demo.html" class="demo-btn">立即体验</a>
+                </div>
+                
+                <div class="demo-card">
+                    <i class="fas fa-desktop"></i>
+                    <h3>完整编辑器</h3>
+                    <p>功能完整的丝路智星编辑器，需要 Flash Player 支持</p>
+                    <a href="../silkroadstar.html" class="demo-btn">打开编辑器</a>
+                </div>
+                
+                <div class="demo-card">
+                    <i class="fas fa-download"></i>
+                    <h3>下载桌面版</h3>
+                    <p>下载独立运行的桌面应用，获得最佳体验</p>
+                    <a href="https://github.com/18848007642/easy-scratch2/releases" class="demo-btn">下载安装</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 特性展示 -->
+    <section class="features" id="features">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>图形化编程</h3>
+                <p>拖拽积木块即可编程，无需记忆复杂语法</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>课程体系</h3>
+                <p>系统化的编程课程，从入门到进阶循序渐进</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3>云端存储</h3>
+                <p>作品自动保存到云端，随时随地继续创作</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>社区分享</h3>
+                <p>与全球小创客分享作品，互相学习进步</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/18848007642/easy-scratch2">GitHub</a>
+            <a href="https://github.com/18848007642/easy-scratch2/wiki">文档</a>
+            <a href="https://github.com/18848007642/easy-scratch2/issues">反馈</a>
+            <a href="about.html">关于我们</a>
+        </div>
+        <p>© 2024 丝路智星科技 版权所有</p>
+        <p>基于 MIT Scratch 2.0 开源项目</p>
+    </footer>
+</body>
+</html>
