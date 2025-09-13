@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>丝路智星 - 青少年编程教育平台</title>
-    <meta name="description" content="丝路智星是基于Scratch的青少年编程教育平台，让孩子在游戏中学习编程，培养逻辑思维和创造力。">
-    <meta name="keywords" content="丝路智星,SilkRoadStar,少儿编程,Scratch,编程教育,图形化编程">
-    
+    <title>丝路智星 - 青少年积木编程教育平台</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="manifest" href="manifest.json">
     <style>
         * {
             margin: 0;
@@ -15,22 +14,25 @@
         }
         
         body {
-            font-family: 'Microsoft YaHei', 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: #333;
         }
         
-        /* 顶部导航栏 */
-        .header {
-            background: linear-gradient(90deg, #1E5A8E 0%, #0D3B66 100%);
-            color: white;
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
         
-        .header-content {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -41,185 +43,295 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
         }
         
-        .logo-icon {
+        .logo img {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
-            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .nav-links {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
-            color: #1E5A8E;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            gap: 2rem;
         }
         
-        .logo-img {
-            height: 50px;
-            width: auto;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-        
-        .logo-text {
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .slogan {
-            font-size: 12px;
-            color: #D4AF37;
-            margin-top: 2px;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-        
-        .nav-item {
-            color: white;
+        .nav-links a {
+            color: #333;
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 16px;
         }
         
-        .nav-item:hover {
-            color: #D4AF37;
+        .nav-links a:hover {
+            color: #667eea;
         }
         
-        .btn-start {
-            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
-            color: #1E5A8E;
-            padding: 10px 25px;
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s;
         }
         
-        .btn-start:hover {
+        .start-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
         }
         
-        /* 主内容区 */
-        .main-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+        /* 主要内容 */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
         }
         
-        .editor-wrapper {
+        .hero-section {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: white;
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* 编辑器容器 */
+        .editor-container {
+            max-width: 1400px;
+            margin: 0 auto;
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             overflow: hidden;
-            width: 90%;
-            max-width: 1200px;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
         }
         
         .editor-header {
-            background: linear-gradient(90deg, #f5f5f5 0%, #e8e8e8 100%);
-            padding: 10px 20px;
-            border-bottom: 1px solid #ddd;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .project-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .project-name {
-            font-size: 16px;
+        .editor-title {
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #333;
         }
         
         .editor-controls {
             display: flex;
-            gap: 10px;
+            gap: 1rem;
         }
         
         .control-btn {
-            padding: 5px 15px;
-            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .btn-save {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .btn-share {
-            background: #2196F3;
-            color: white;
-        }
-        
-        .btn-help {
-            background: #FF9800;
-            color: white;
+            transition: background 0.3s;
         }
         
         .control-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.3);
         }
         
-        #silkroadstar-container {
+        .editor-body {
+            display: flex;
+            height: 600px;
+        }
+        
+        /* 左侧素材面板 */
+        .assets-panel {
+            width: 250px;
+            background: #f8f9fa;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+        }
+        
+        .assets-header {
+            padding: 1rem;
+            background: #e9ecef;
+            font-weight: bold;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .asset-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .asset-tab {
             flex: 1;
-            width: 100%;
-            position: relative;
-            background: #f0f0f0;
-        }
-        
-        /* 底部信息栏 */
-        .footer {
-            background: #1E5A8E;
-            color: white;
+            padding: 0.75rem;
             text-align: center;
-            padding: 15px;
-            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            transition: background 0.3s;
         }
         
-        .footer a {
-            color: #D4AF37;
-            text-decoration: none;
+        .asset-tab:hover {
+            background: #f8f9fa;
         }
+        
+        .asset-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .assets-grid {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .asset-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .asset-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .asset-thumb {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .asset-thumb img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .asset-name {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* 中间工作区 */
+        .workspace {
+            flex: 1;
+            background: #fafafa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .workspace-canvas {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0,0,0,.05) 25%, rgba(0,0,0,.05) 26%, transparent 27%, transparent 74%, rgba(0,0,0,.05) 75%, rgba(0,0,0,.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0,0,0,.05) 25%, rgba(0,0,0,.05) 26%, transparent 27%, transparent 74%, rgba(0,0,0,.05) 75%, rgba(0,0,0,.05) 76%, transparent 77%, transparent);
+            background-size: 30px 30px;
+        }
+        
+        /* 右侧舞台 */
+        .stage-panel {
+            width: 480px;
+            background: white;
+            border-left: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stage-header {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stage-viewer {
+            flex: 1;
+            background: white;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stage-canvas {
+            width: 440px;
+            height: 330px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        /* 底部控制台 */
+        .console-panel {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .console-line {
+            margin-bottom: 0.5rem;
+        }
+        
+        .console-line.info { color: #74b9ff; }
+        .console-line.success { color: #55efc4; }
+        .console-line.warning { color: #fdcb6e; }
+        .console-line.error { color: #ff7675; }
         
         /* 加载动画 */
-        .loading {
-            position: absolute;
+        .loader {
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            text-align: center;
+            display: none;
         }
         
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
+        .loader.active {
+            display: block;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
             border: 5px solid #f3f3f3;
-            border-top: 5px solid #1E5A8E;
+            border-top: 5px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -229,104 +341,361 @@
             100% { transform: rotate(360deg); }
         }
         
-        .loading-text {
-            margin-top: 20px;
-            color: #666;
-            font-size: 16px;
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .editor-body {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .assets-panel,
+            .stage-panel {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 顶部导航 -->
-    <header class="header">
-        <div class="header-content">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
             <div class="logo">
-                <!-- 如果有Logo图片，使用下面的代码 -->
-                <!-- <img src="assets/images/logo.png" alt="丝路智星" class="logo-img"> -->
-                <!-- 暂时使用文字Logo -->
-                <div class="logo-icon">智</div>
-                <div>
-                    <div class="logo-text">丝路智星</div>
-                    <div class="slogan">追逐教育梦想与探索</div>
-                </div>
+                <img src="assets/images/logo.png" alt="丝路智星">
+                <span>丝路智星</span>
             </div>
-            <nav class="nav-menu">
-                <a href="#" class="nav-item">首页</a>
-                <a href="#" class="nav-item">课程</a>
-                <a href="#" class="nav-item">作品</a>
-                <a href="#" class="nav-item">社区</a>
-                <a href="#" class="btn-start">开始创作</a>
-            </nav>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#courses">课程</a>
+                <a href="#projects">作品</a>
+                <a href="#community">社区</a>
+                <a href="#about">关于</a>
+            </div>
+            <button class="start-btn" onclick="startEditor()">开始创作</button>
         </div>
-    </header>
+    </nav>
     
-    <!-- 主编辑器区域 -->
-    <div class="main-container">
-        <div class="editor-wrapper">
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <div class="hero-section">
+            <h1>丝路智星编程平台</h1>
+            <p>让每个孩子都能轻松学习编程，创造无限可能</p>
+        </div>
+        
+        <!-- 编辑器 -->
+        <div class="editor-container">
             <div class="editor-header">
-                <div class="project-info">
-                    <span class="project-name">我的项目</span>
-                    <span style="color: #666;">未保存</span>
-                </div>
+                <div class="editor-title">积木编程编辑器</div>
                 <div class="editor-controls">
-                    <button class="control-btn btn-save">保存</button>
-                    <button class="control-btn btn-share">分享</button>
-                    <button class="control-btn btn-help">帮助</button>
+                    <button class="control-btn" onclick="saveProject()">保存</button>
+                    <button class="control-btn" onclick="loadProject()">加载</button>
+                    <button class="control-btn" onclick="shareProject()">分享</button>
+                    <button class="control-btn" onclick="runCode()">▶ 运行</button>
                 </div>
             </div>
             
-            <div id="silkroadstar-container">
-                <!-- Flash/SWF 内容将加载在这里 -->
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">丝路智星编辑器加载中...</div>
+            <div class="editor-body">
+                <!-- 素材面板 -->
+                <div class="assets-panel">
+                    <div class="assets-header">素材库</div>
+                    <div class="asset-tabs">
+                        <button class="asset-tab active" onclick="showAssets('sprites')">精灵</button>
+                        <button class="asset-tab" onclick="showAssets('backdrops')">背景</button>
+                        <button class="asset-tab" onclick="showAssets('sounds')">声音</button>
+                    </div>
+                    <div class="assets-grid" id="assetsGrid">
+                        <!-- 素材将在这里动态加载 -->
+                        <div class="asset-item">
+                            <div class="asset-thumb">🐱</div>
+                            <div class="asset-name">小猫</div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-thumb">🐶</div>
+                            <div class="asset-name">小狗</div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-thumb">🦋</div>
+                            <div class="asset-name">蝴蝶</div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-thumb">🚗</div>
+                            <div class="asset-name">汽车</div>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- 实际的 SWF 嵌入代码 -->
-                <embed id="silkroadstar-swf" 
-                       src="bin-debug/scratch2.swf" 
-                       width="100%" 
-                       height="100%" 
-                       type="application/x-shockwave-flash"
-                       style="display: none;">
+                <!-- 工作区 -->
+                <div class="workspace">
+                    <div class="workspace-canvas" id="workspaceCanvas">
+                        <!-- Blockly或自定义积木编辑器将在这里渲染 -->
+                    </div>
+                </div>
+                
+                <!-- 舞台 -->
+                <div class="stage-panel">
+                    <div class="stage-header">
+                        <span>舞台</span>
+                        <button class="control-btn" onclick="resetStage()">重置</button>
+                    </div>
+                    <div class="stage-viewer">
+                        <div class="stage-canvas" id="stageCanvas">
+                            <!-- 舞台内容 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 控制台 -->
+            <div class="console-panel" id="console">
+                <div class="console-line info">🎯 系统就绪，欢迎使用丝路智星编程平台！</div>
+                <div class="console-line success">✅ 素材库加载完成</div>
             </div>
         </div>
     </div>
     
-    <!-- 底部信息 -->
-    <footer class="footer">
-        <p>© 2024 丝路智星科技 版权所有 | <a href="#">关于我们</a> | <a href="#">使用条款</a> | <a href="#">隐私政策</a></p>
-    </footer>
+    <!-- 加载动画 -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
     
+    <!-- 引入脚本 -->
+    <script src="js/MediaLibrary.js"></script>
+    <script src="ai-assistant.js"></script>
     <script>
-        // 初始化丝路智星编辑器
-        window.onload = function() {
-            // 模拟加载过程
-            setTimeout(function() {
-                var loading = document.querySelector('.loading');
-                var swf = document.getElementById('silkroadstar-swf');
-                if (loading) loading.style.display = 'none';
-                if (swf) swf.style.display = 'block';
-            }, 2000);
+        // 全局变量
+        let mediaLibrary = null;
+        let currentAssetType = 'sprites';
+        
+        // 初始化媒体库
+        async function initMediaLibrary() {
+            console.log('开始加载素材库...');
+            mediaLibrary = new MediaLibrary();
             
-            // 项目管理功能
-            window.SilkRoadStar = {
-                saveProject: function() {
-                    alert('项目保存功能开发中...');
-                },
-                shareProject: function() {
-                    alert('项目分享功能开发中...');
-                },
-                showHelp: function() {
-                    alert('丝路智星帮助中心\n\n快捷键：\n- Ctrl+S: 保存\n- F5: 运行\n- Space: 暂停/继续');
-                }
+            try {
+                await mediaLibrary.init(2); // 使用Scratch 2素材
+                
+                // 显示统计信息
+                const stats = {
+                    sprites: mediaLibrary.getSprites().length,
+                    costumes: mediaLibrary.getCostumes().length,
+                    backdrops: mediaLibrary.getBackdrops().length,
+                    sounds: mediaLibrary.getSounds().length
+                };
+                
+                addConsoleLog(`素材统计 - 精灵: ${stats.sprites}个, 造型: ${stats.costumes}个, 背景: ${stats.backdrops}个, 声音: ${stats.sounds}个`, 'success');
+                
+                // 显示默认素材
+                showAssets('sprites');
+                
+            } catch (error) {
+                console.error('素材库加载失败:', error);
+                addConsoleLog('素材库加载失败，使用默认素材', 'warning');
+            }
+        }
+        
+        // 显示素材
+        function showAssets(type) {
+            currentAssetType = type;
+            
+            // 更新标签状态
+            document.querySelectorAll('.asset-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 获取素材
+            let assets = [];
+            switch(type) {
+                case 'sprites':
+                    assets = mediaLibrary ? mediaLibrary.getSprites().slice(0, 20) : [];
+                    break;
+                case 'backdrops':
+                    assets = mediaLibrary ? mediaLibrary.getBackdrops().slice(0, 20) : [];
+                    break;
+                case 'sounds':
+                    assets = mediaLibrary ? mediaLibrary.getSounds().slice(0, 20) : [];
+                    break;
+            }
+            
+            // 更新素材网格
+            const grid = document.getElementById('assetsGrid');
+            grid.innerHTML = '';
+            
+            if (assets.length === 0) {
+                // 显示默认素材
+                const defaultAssets = getDefaultAssets(type);
+                defaultAssets.forEach(asset => {
+                    const item = createAssetItem(asset);
+                    grid.appendChild(item);
+                });
+            } else {
+                // 显示真实素材
+                assets.forEach(asset => {
+                    const item = createAssetItem(asset, type);
+                    grid.appendChild(item);
+                });
+            }
+            
+            addConsoleLog(`切换到${type === 'sprites' ? '精灵' : type === 'backdrops' ? '背景' : '声音'}素材`, 'info');
+        }
+        
+        // 创建素材项
+        function createAssetItem(asset, type) {
+            const item = document.createElement('div');
+            item.className = 'asset-item';
+            
+            const thumb = document.createElement('div');
+            thumb.className = 'asset-thumb';
+            
+            if (type === 'sounds' || asset.type === 'sound') {
+                thumb.innerHTML = '🎵';
+            } else if (asset.md5 && mediaLibrary) {
+                const img = document.createElement('img');
+                img.src = mediaLibrary.getThumbnailUrl(asset.md5);
+                img.onerror = () => {
+                    img.src = mediaLibrary.getAssetUrl(asset.md5);
+                    img.onerror = () => {
+                        thumb.innerHTML = asset.icon || '📦';
+                    };
+                };
+                thumb.appendChild(img);
+            } else {
+                thumb.innerHTML = asset.icon || '📦';
+            }
+            
+            const name = document.createElement('div');
+            name.className = 'asset-name';
+            name.textContent = asset.name || 'Unnamed';
+            
+            item.appendChild(thumb);
+            item.appendChild(name);
+            
+            item.onclick = () => selectAsset(asset);
+            
+            return item;
+        }
+        
+        // 获取默认素材
+        function getDefaultAssets(type) {
+            const defaults = {
+                sprites: [
+                    { name: '小猫', icon: '🐱' },
+                    { name: '小狗', icon: '🐶' },
+                    { name: '蝴蝶', icon: '🦋' },
+                    { name: '汽车', icon: '🚗' },
+                    { name: '飞机', icon: '✈️' },
+                    { name: '机器人', icon: '🤖' }
+                ],
+                backdrops: [
+                    { name: '蓝天', icon: '☁️' },
+                    { name: '森林', icon: '🌲' },
+                    { name: '城市', icon: '🏙️' },
+                    { name: '太空', icon: '🌌' },
+                    { name: '海洋', icon: '🌊' },
+                    { name: '沙漠', icon: '🏜️' }
+                ],
+                sounds: [
+                    { name: '喵喵', icon: '🎵' },
+                    { name: '汪汪', icon: '🎵' },
+                    { name: '钢琴', icon: '🎹' },
+                    { name: '鼓声', icon: '🥁' },
+                    { name: '掌声', icon: '👏' },
+                    { name: '笑声', icon: '😄' }
+                ]
             };
             
-            // 绑定按钮事件
-            document.querySelector('.btn-save').onclick = SilkRoadStar.saveProject;
-            document.querySelector('.btn-share').onclick = SilkRoadStar.shareProject;
-            document.querySelector('.btn-help').onclick = SilkRoadStar.showHelp;
-        };
+            return defaults[type] || [];
+        }
+        
+        // 选择素材
+        function selectAsset(asset) {
+            addConsoleLog(`选择了素材: ${asset.name}`, 'info');
+            // TODO: 将素材添加到工作区
+        }
+        
+        // 添加控制台日志
+        function addConsoleLog(message, type = 'info') {
+            const console = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            
+            const icons = {
+                info: '🎯',
+                success: '✅',
+                warning: '⚠️',
+                error: '❌'
+            };
+            
+            line.textContent = `${icons[type] || ''} ${message}`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        // 编辑器功能
+        function startEditor() {
+            addConsoleLog('启动编辑器', 'success');
+            document.querySelector('.editor-container').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function saveProject() {
+            addConsoleLog('保存项目...', 'info');
+            // TODO: 实现保存功能
+            setTimeout(() => {
+                addConsoleLog('项目已保存', 'success');
+            }, 1000);
+        }
+        
+        function loadProject() {
+            addConsoleLog('加载项目...', 'info');
+            // TODO: 实现加载功能
+        }
+        
+        function shareProject() {
+            addConsoleLog('分享项目...', 'info');
+            // TODO: 实现分享功能
+        }
+        
+        function runCode() {
+            addConsoleLog('运行代码...', 'info');
+            // TODO: 实现运行功能
+            setTimeout(() => {
+                addConsoleLog('代码执行完成', 'success');
+            }, 1500);
+        }
+        
+        function resetStage() {
+            addConsoleLog('重置舞台', 'info');
+            // TODO: 实现重置功能
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            addConsoleLog('系统初始化中...', 'info');
+            
+            // 显示加载动画
+            document.getElementById('loader').classList.add('active');
+            
+            // 初始化素材库
+            await initMediaLibrary();
+            
+            // 初始化AI助手
+            if (window.AIAssistant) {
+                window.aiAssistant = new AIAssistant();
+                addConsoleLog('AI助手已就绪', 'success');
+            }
+            
+            // 隐藏加载动画
+            document.getElementById('loader').classList.remove('active');
+            
+            addConsoleLog('系统初始化完成，可以开始创作了！', 'success');
+        });
     </script>
 </body>
 </html>
