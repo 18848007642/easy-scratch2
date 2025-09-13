@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丝路智星 - 青少年编程教育平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            opacity: 0.85;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .feature p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .status {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(76, 175, 80, 0.9);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">🟢 系统运行中</div>
+    
+    <div class="container">
+        <h1>🌟 丝路智星</h1>
+        <p class="subtitle">SilkRoadStar - 青少年编程教育平台</p>
+        
+        <p class="description">
+            基于Scratch的可视化编程平台，让孩子们通过拖拽积木块的方式学习编程思维，
+            培养逻辑思考能力和创造力。支持在线编程、作品分享、AI辅助教学等功能。
+        </p>
+        
+        <div class="buttons">
+            <a href="docs/index.html" class="btn">开始编程</a>
+            <a href="docs/courses/" class="btn btn-secondary">查看课程</a>
+            <a href="https://github.com/18848007642/easy-scratch2" class="btn btn-secondary">GitHub</a>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🎮 可视化编程</h3>
+                <p>拖拽式积木编程，无需编写代码</p>
+            </div>
+            <div class="feature">
+                <h3>📚 丰富素材库</h3>
+                <p>500+精灵、背景、声音素材</p>
+            </div>
+            <div class="feature">
+                <h3>🤖 AI助手</h3>
+                <p>智能编程辅助，实时答疑解惑</p>
+            </div>
+            <div class="feature">
+                <h3>☁️ 云端存储</h3>
+                <p>作品自动保存，随时随地创作</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature');
+            features.forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    feature.style.transition = 'all 0.5s';
+                    feature.style.opacity = '1';
+                    feature.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
