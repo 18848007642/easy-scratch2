@@ -1,9 +1,16 @@
 # 丝路智星 - SilkRoadStar
 
 <div align="center">
-  <img src="assets/logo.png" alt="丝路智星" width="200"/>
-  <h3>青少年编程教育平台</h3>
-  <p>编程启蒙，智创未来</p>
+  <!-- Logo展示区 -->
+  <!-- 请将您的Logo图片保存为 assets/images/logo.png -->
+  <h1>🌟 丝路智星</h1>
+  <h3>SlopeStar Nexus</h3>
+  <p><strong>青少年编程教育平台</strong></p>
+  <p><em>追逐教育梦想与探索</em></p>
+  
+  [![GitHub stars](https://img.shields.io/github/stars/18848007642/easy-scratch2?style=social)](https://github.com/18848007642/easy-scratch2)
+  [![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](LICENSE)
+  [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/18848007642/easy-scratch2/releases)
 </div>
 
 ## 项目介绍
