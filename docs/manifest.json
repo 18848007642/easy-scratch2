@@ -1,0 +1,61 @@
+{
+  "name": "丝路智星编程平台",
+  "short_name": "丝路智星",
+  "description": "青少年编程教育平台 - 追逐教育梦想与探索",
+  "lang": "zh-CN",
+  "start_url": "/easy-scratch2/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "theme_color": "#1E5A8E",
+  "background_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-apple.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    }
+  ],
+  "categories": ["education", "kids", "games"],
+  "screenshots": [
+    {
+      "src": "assets/screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshot2.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "新建项目",
+      "url": "/easy-scratch2/?action=new",
+      "description": "创建新的编程项目"
+    },
+    {
+      "name": "课程中心",
+      "url": "/easy-scratch2/?page=courses",
+      "description": "查看编程课程"
+    },
+    {
+      "name": "我的作品",
+      "url": "/easy-scratch2/?page=projects",
+      "description": "管理我的作品"
+    }
+  ]
+}

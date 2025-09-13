@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>丝路智星 - 移动端下载</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="丝路智星">
+    <link rel="apple-touch-icon" href="assets/icon-apple.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            font-size: 60px;
+            color: #1E5A8E;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .download-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .platform-title {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .ios-btn {
+            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+        }
+        
+        .android-btn {
+            background: linear-gradient(135deg, #3DDC84 0%, #4285F4 100%);
+        }
+        
+        .web-btn {
+            background: linear-gradient(135deg, #3B82F6 0%, #1E5A8E 100%);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .qr-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        
+        .feature-text {
+            font-size: 14px;
+        }
+        
+        .install-pwa {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .install-pwa h3 {
+            margin-bottom: 15px;
+        }
+        
+        .install-steps {
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">智</div>
+        <h1>丝路智星</h1>
+        <p class="subtitle">青少年编程教育平台</p>
+        
+        <div class="download-section">
+            <div class="platform-title">
+                📱 选择您的平台
+            </div>
+            
+            <!-- iOS下载 -->
+            <button class="download-btn ios-btn" onclick="installIOS()">
+                🍎 iOS版本 (添加到主屏幕)
+            </button>
+            
+            <!-- Android下载 -->
+            <button class="download-btn android-btn" onclick="installAndroid()">
+                🤖 Android版本 (安装应用)
+            </button>
+            
+            <!-- 网页版 -->
+            <a href="index.html" class="download-btn web-btn">
+                🌐 打开网页版
+            </a>
+        </div>
+        
+        <div class="qr-code">
+            <div class="qr-placeholder">
+                扫码访问<br>移动端
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🎮</div>
+                <div class="feature-text">游戏化学习</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <div class="feature-text">系统化课程</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🏆</div>
+                <div class="feature-text">成就系统</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">☁️</div>
+                <div class="feature-text">云端同步</div>
+            </div>
+        </div>
+        
+        <div class="install-pwa">
+            <h3>📲 安装指南</h3>
+            <div class="install-steps">
+                <strong>iOS用户：</strong><br>
+                1. 点击Safari浏览器的分享按钮<br>
+                2. 选择"添加到主屏幕"<br>
+                3. 点击"添加"完成安装<br><br>
+                
+                <strong>Android用户：</strong><br>
+                1. Chrome浏览器会提示安装<br>
+                2. 点击"安装"按钮<br>
+                3. 应用将添加到主屏幕
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // PWA安装
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+        
+        function installAndroid() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('用户接受了安装');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('请使用Chrome浏览器访问本页面，或点击浏览器菜单中的"添加到主屏幕"选项');
+            }
+        }
+        
+        function installIOS() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isInStandaloneMode = window.navigator.standalone === true;
+            
+            if (isIOS && !isInStandaloneMode) {
+                alert('请点击Safari底部的分享按钮，然后选择"添加到主屏幕"');
+            } else if (isInStandaloneMode) {
+                alert('应用已安装！');
+            } else {
+                alert('请在iOS设备上使用Safari浏览器访问');
+            }
+        }
+        
+        // Service Worker注册
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(registration) {
+                console.log('Service Worker 注册成功');
+            });
+        }
+    </script>
+</body>
+</html>
